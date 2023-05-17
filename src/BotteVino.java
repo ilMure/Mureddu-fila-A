@@ -8,13 +8,11 @@ public class BotteVino{
     }
 
     public synchronized void richiediBevuta(Bevitore b){
-        String name = Thread.currentThread().getName();
+        String name = b.getName();
 
-        if (rubinettiLiberi == 0){
-            System.out.println(name+" è in attesa");
-        }
 
         while (rubinettiLiberi == 0){
+            System.out.println(name+" è in attesa");
             try {
                 wait();
             } catch (Exception e) {
@@ -23,7 +21,7 @@ public class BotteVino{
         
         rubinettiLiberi--;
 
-        System.out.println(Thread.currentThread().getName()+" prova a bere");
+        System.out.println(name+" giunge al rubinetto");
 
         try {
             Thread.sleep((int)(Math.random()*3000 +1));
@@ -33,11 +31,11 @@ public class BotteVino{
 
         if(litriRimanenti >= 1){
             litriRimanenti--;
+
         }else{
             System.out.println(name+ " ha trovato la botte vuota");
             b.arresta();
         }
-        
 
     }
 
